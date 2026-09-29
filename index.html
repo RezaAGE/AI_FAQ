@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ | دپارتمان هوش مصنوعی AIC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-0: #070b1a;
+    --bg-1: #0d1226;
+    --bg-2: #131a35;
+    --card: rgba(23, 30, 58, 0.55);
+    --card-hover: rgba(30, 40, 75, 0.75);
+    --border: rgba(120, 140, 220, 0.18);
+    --border-active: rgba(139, 122, 255, 0.65);
+    --text: #e6e9f5;
+    --text-dim: #9aa3c4;
+    --text-mute: #6b7396;
+    --accent-1: #8b7aff;
+    --accent-2: #4ea8ff;
+    --accent-3: #22d3ee;
+    --glow: rgba(139, 122, 255, 0.35);
+  }
+
+  html, body {
+    font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+    background: var(--bg-0);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.95;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* پس‌زمینه با نورهای محو */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(800px circle at 15% 5%, rgba(139, 122, 255, 0.18), transparent 45%),
+      radial-gradient(700px circle at 85% 15%, rgba(78, 168, 255, 0.15), transparent 45%),
+      radial-gradient(900px circle at 50% 100%, rgba(34, 211, 238, 0.10), transparent 50%);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  /* ذرات نورانی */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.35), transparent),
+      radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,0.25), transparent),
+      radial-gradient(1px 1px at 80% 20%, rgba(255,255,255,0.30), transparent),
+      radial-gradient(1px 1px at 40% 85%, rgba(255,255,255,0.20), transparent),
+      radial-gradient(1px 1px at 90% 60%, rgba(255,255,255,0.28), transparent),
+      radial-gradient(1px 1px at 10% 80%, rgba(255,255,255,0.22), transparent);
+    background-size: 100% 100%;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 60px 22px 80px;
+  }
+
+  /* ===== هدر ===== */
+  header {
+    text-align: center;
+    margin-bottom: 45px;
+    animation: fadeDown 0.7s ease;
+  }
+
+  .logo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    border-radius: 100px;
+    background: rgba(139, 122, 255, 0.10);
+    border: 1px solid rgba(139, 122, 255, 0.30);
+    color: var(--accent-1);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+  }
+  .logo-badge::before {
+    content: '';
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent-1);
+    box-shadow: 0 0 12px var(--accent-1);
+    animation: pulse 2s infinite;
+  }
+
+  header h1 {
+    font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+    font-weight: 800;
+    background: linear-gradient(120deg, #ffffff 0%, #b8b1ff 45%, #6fc4ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+    line-height: 1.4;
+  }
+
+  header p {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    font-weight: 400;
+  }
+
+  /* ===== جستجو ===== */
+  .search-wrap {
+    position: relative;
+    margin-bottom: 20px;
+    animation: fadeUp 0.7s ease 0.1s backwards;
+  }
+
+  .search-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 20px;
+    background: linear-gradient(120deg, var(--accent-1), var(--accent-2), var(--accent-3));
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    z-index: 0;
+    filter: blur(12px);
+  }
+  .search-wrap:focus-within::before { opacity: 0.55; }
+
+  #searchInput {
+    position: relative;
+    width: 100%;
+    padding: 20px 58px 20px 22px;
+    font-size: 1.02rem;
+    font-family: inherit;
+    font-weight: 500;
+    border-radius: 18px;
+    border: 1.5px solid var(--border);
+    background: rgba(19, 26, 53, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: var(--text);
+    outline: none;
+    transition: all 0.3s ease;
+    z-index: 1;
+  }
+  #searchInput::placeholder { color: var(--text-mute); font-weight: 400; }
+  #searchInput:focus {
+    border-color: var(--border-active);
+    background: rgba(23, 30, 58, 0.95);
+    box-shadow: 0 20px 50px -20px var(--glow);
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-mute);
+    font-size: 1.25rem;
+    z-index: 2;
+    transition: color 0.3s ease;
+    pointer-events: none;
+  }
+  .search-wrap:focus-within .search-icon { color: var(--accent-1); }
+
+  .hint {
+    text-align: center;
+    color: var(--text-mute);
+    font-size: 0.85rem;
+    margin-bottom: 35px;
+    animation: fadeUp 0.7s ease 0.2s backwards;
+  }
+
+  /* ===== کارت‌های سوال ===== */
+  .category-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-dim);
+    margin: 38px 4px 16px;
+    animation: fadeUp 0.5s ease;
+  }
+  .category-title::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    border-radius: 4px;
+    background: linear-gradient(180deg, var(--accent-1), var(--accent-2));
+    box-shadow: 0 0 12px var(--glow);
+  }
+
+  .faq-item {
+    position: relative;
+    background: var(--card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1.5px solid var(--border);
+    border-radius: 18px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: fadeUp 0.45s ease backwards;
+  }
+
+  .faq-item:hover {
+    border-color: rgba(139, 122, 255, 0.35);
+    background: var(--card-hover);
+    transform: translateY(-2px);
+  }
+
+  .faq-item.open {
+    border-color: var(--border-active);
+    background: var(--card-hover);
+    box-shadow:
+      0 20px 50px -25px var(--glow),
+      inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+
+  /* خط نور بالای کارت باز */
+  .faq-item::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; left: 0;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, var(--accent-1), var(--accent-2), transparent);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+  .faq-item.open::before { opacity: 1; }
+
+  .faq-question {
+    padding: 22px 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    font-weight: 600;
+    color: var(--text);
+    font-size: 1rem;
+    user-select: none;
+    transition: color 0.25s ease;
+  }
+  .faq-item.open .faq-question { color: #ffffff; }
+
+  .q-text { flex: 1; line-height: 1.75; }
+
+  .arrow-wrap {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(139, 122, 255, 0.10);
+    border: 1px solid rgba(139, 122, 255, 0.20);
+    display: grid;
+    place-items: center;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    color: var(--accent-1);
+  }
+  .faq-item:hover .arrow-wrap {
+    background: rgba(139, 122, 255, 0.20);
+    border-color: rgba(139, 122, 255, 0.45);
+  }
+  .faq-item.open .arrow-wrap {
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    border-color: transparent;
+    color: white;
+    transform: rotate(180deg);
+    box-shadow: 0 6px 18px -4px var(--glow);
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                padding 0.4s ease,
+                opacity 0.4s ease;
+    padding: 0 24px;
+    color: var(--text-dim);
+    font-size: 0.94rem;
+    font-weight: 400;
+    opacity: 0;
+    line-height: 2;
+  }
+  .faq-item.open .faq-answer {
+    max-height: 900px;
+    padding: 4px 24px 24px;
+    opacity: 1;
+    border-top: 1px solid var(--border);
+    margin-top: 4px;
+  }
+
+  /* ===== نتیجه خالی ===== */
+  .no-result {
+    text-align: center;
+    padding: 60px 30px;
+    color: var(--text-dim);
+    background: var(--card);
+    border-radius: 20px;
+    border: 1.5px dashed var(--border);
+    backdrop-filter: blur(20px);
+    animation: fadeUp 0.5s ease;
+    font-size: 1rem;
+  }
+  .no-result .emoji { font-size: 2.5rem; display: block; margin-bottom: 12px; }
+
+  /* ===== فوتر ===== */
+  footer {
+    text-align: center;
+    margin-top: 70px;
+    color: var(--text-mute);
+    font-size: 0.82rem;
+    padding-top: 30px;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.7s ease 0.4s backwards;
+  }
+  footer .brand {
+    background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+  }
+
+  /* ===== انیمیشن‌ها ===== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 12px var(--accent-1); }
+    50% { opacity: 0.5; box-shadow: 0 0 20px var(--accent-1); }
+  }
+
+  /* اسکرول‌بار */
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: var(--bg-0); }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--accent-1), var(--accent-2));
+    border-radius: 10px;
+    border: 2px solid var(--bg-0);
+  }
+
+  /* ریسپانسیو */
+  @media (max-width: 600px) {
+    .container { padding: 40px 14px 60px; }
+    .faq-question { padding: 18px 18px; font-size: 0.95rem; }
+    .faq-item.open .faq-answer { padding: 4px 18px 20px; }
+    #searchInput { padding: 17px 52px 17px 18px; font-size: 0.95rem; }
+    .search-icon { left: 18px; font-size: 1.1rem; }
+    .arrow-wrap { width: 30px; height: 30px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo-badge">AIC · AI Department</div>
+    <h1>سوالات متداول دپارتمان هوش مصنوعی</h1>
+    <p>انجمن علمی هوش مصنوعی دانشگاه آزاد کرج</p>
+  </header>
+
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="سوال خود را بنویسید... مثلاً: پروژه، منتور، منابع، پایتون">
+  </div>
+
+  <p class="hint">کافیست سوال خود را تایپ کنید؛ پاسخ‌های مرتبط به‌صورت خودکار نمایش داده می‌شوند.</p>
+
+  <div id="faqList"></div>
+
+  <footer>
+    آخرین بروزرسانی: ۱۴۰۵ &nbsp;·&nbsp; ساخته‌شده برای <span class="brand">AIC AI Department</span>
+  </footer>
+</div>
+
+<script>
+const faqData = [
+  { cat: "شروع و شناخت",
+    q: "دپارتمان هوش مصنوعی دقیقاً چه کاری انجام می‌دهد؟",
+    a: "در این دپارتمان، هدف آموزش و توانمندسازی اعضا به‌گونه‌ای است که ابتدا مهارت‌های لازم را کسب کنند و در نهایت بتوانند تیم‌سازی کرده و محصول ارائه دهند.",
+    k: "دپارتمان هدف کار محصول تیم سازی مهارت" },
+
+  { cat: "شروع و شناخت",
+    q: "من الان عضو شده‌ام، از کجا شروع کنم؟",
+    a: "به تاپیک Introduction مراجعه کنید و توضیحات منتور را از ابتدا به دقت مطالعه کنید.",
+    k: "شروع عضو جدید introduction معرفی تاپیک" },
+
+  { cat: "شروع و شناخت",
+    q: "هدف نهایی این مسیر چیست؟ در پایان به چه جایگاهی می‌رسم؟",
+    a: "هدف این دپارتمان، ارائه رودمپ و بستر آموزشی مناسب برای شروع و یادگیری مسیر هوش مصنوعی است. این حوزه شاخه‌های متعددی دارد و شما بسته به علاقه خودتان می‌توانید انتخاب کنید که روی کدام شاخه عمیق شوید.",
+    k: "هدف نهایی مسیر جایگاه رودمپ شاخه علاقه" },
+
+  { cat: "شروع و شناخت",
+    q: "چند ساعت در هفته باید وقت بگذارم؟",
+    a: "این موضوع بسته به برنامه شخصی شما متفاوت است؛ اما به‌طور حداقلی باید حدود ۱ تا ۲ ساعت در هفته را برای پیشبرد بهتر برنامه‌های آموزشی و سایر فعالیت‌ها در نظر بگیرید.",
+    k: "ساعت وقت هفته زمان اختصاص دادن" },
+
+  { cat: "شروع و شناخت",
+    q: "بعد از عضویت، اولین کارهایی که باید انجام دهم چیست؟",
+    a: "ابتدا در تاپیک General خودتان را به‌عنوان عضو جدید به منتور معرفی کنید، سپس به تاپیک Introduction مراجعه کرده و موارد ذکرشده از طرف منتور را به‌طور کامل مطالعه کنید.",
+    k: "بعد عضویت اولین کار معرفی general introduction" },
+
+  { cat: "شروع و شناخت",
+    q: "تفاوت عضو، دانشجو، منتور و اسیستنت چیست؟",
+    a: "سلسله‌مراتب دپارتمان به این شکل است: مدیر اصلی دپارتمان، منتور مجموعه است که مسئولیت طرح‌ریزی و پیشبرد برنامه‌ها بر عهده ایشان است. هر منتور معمولاً دستیارانی تحت عنوان TA یا Assistant دارد که وظیفه پیگیری برنامه‌ها و وظایف محول‌شده از طرف منتور را بر عهده دارند. در نهایت اعضای معمولی قرار دارند که در دوره‌ها شرکت می‌کنند و مسیر آموزش را پیش می‌برند.",
+    k: "تفاوت عضو دانشجو منتور اسیستنت assistant ta سلسله مراتب نقش" },
+
+  { cat: "مسیر یادگیری",
+    q: "پیش‌نیازهای من چیست؟ اگر پایتون بلد نباشم چه می‌شود؟",
+    a: "برای شروع در این دپارتمان، لزوماً نیازی به پیش‌زمینه ندارید و بستر برای شروع از سطح صفر برای اعضا فراهم شده است تا بتوانند از هر سطحی وارد این حوزه شوند.",
+    k: "پیش نیاز پایتون بلد نبودن صفر شروع سطح" },
+
+  { cat: "مسیر یادگیری",
+    q: "ترتیب یادگیری چگونه است؟ اول چه چیزی، بعد چه چیزی؟",
+    a: "به‌طور کلی، در ابتدا باید زبان پایتون و جبر خطی را به‌صورت موازی شروع کنید تا پایه این حوزه را آموزش ببینید؛ چرا که برای شروع کار ضروری هستند. منابع این دوره‌ها در تایتل References گپ این دپارتمان موجود است و می‌توانید با رودمپ و منابع آموزشی منتور به‌طور کامل و دقیق‌تر آشنا شوید.",
+    k: "ترتیب یادگیری اول پایتون جبر خطی موازی references رودمپ" },
+
+  { cat: "مسیر یادگیری",
+    q: "چه منابعی را پیشنهاد می‌کنید؟",
+    a: "منابع آموزشی شما از قبل توسط منتور تعریف شده است. در صورتی که بخواهید خارج از این منابع دوره‌ای را شروع کنید، حتماً پیش از آن با منتور مجموعه مشورت کنید تا دوره مورد تأیید قرار گیرد.",
+    k: "منابع پیشنهاد دوره معرفی مشورت تایید" },
+
+  { cat: "مسیر یادگیری",
+    q: "کلاس‌ها آنلاین است یا حضوری؟ چه زمانی برگزار می‌شود؟",
+    a: "آموزش این دپارتمان غیرحضوری و به‌صورت آنلاین برگزار می‌شود. دوره‌ها از مطرح‌ترین دوره‌های آموزشی موجود برای علاقه‌مندان این حوزه انتخاب شده‌اند. زمان مشخصی در هفته برای آموزش وجود ندارد؛ اما هر هفته دو گزارش هفتگی وجود دارد که باید بر اساس عملکرد و آموزش خود، آن گزارش‌ها را برای منتور مجموعه در تایتل Report Updates آپلود کنید تا روند آموزش شما تحت نظر تیم مجموعه قرار گیرد.",
+    k: "کلاس آنلاین حضوری زمان برگزاری گزارش هفتگی report updates" },
+
+  { cat: "مسیر یادگیری",
+    q: "اگر یک جلسه را از دست بدهم، جبرانی دارد؟",
+    a: "اگر به هر دلیل یا شرایطی امکان حضور در میت‌های آنلاین یا حضوری که در هفته برای شما در نظر گرفته می‌شود را نداشتید، حتماً با منتور یا اسیستنت‌های مجموعه هماهنگی‌های لازم را انجام دهید.",
+    k: "جلسه از دست دادن غیبت جبرانی میت هماهنگی" },
+
+  { cat: "مسیر یادگیری",
+    q: "آیا می‌توانم موازی با مسیر اصلی، چیز دیگری هم یاد بگیرم؟",
+    a: "بله، به‌طور کلی منعی برای پیشبرد دوره‌های دیگر به‌صورت هم‌زمان با دوره‌های دپارتمان وجود ندارد؛ تا زمانی که دوره‌های آموزشی دپارتمان کامل و درست پیش برود، هیچ منعی وجود ندارد.",
+    k: "موازی همزمان دوره دیگر یادگیری منع" },
+
+  { cat: "مسیر یادگیری",
+    q: "چه زبان برنامه‌نویسی و چه ابزارهایی لازم است؟",
+    a: "برای شروع باید زبان پایتون را یاد بگیرید و با ابزارهایی مانند NumPy و Pandas آشنا شوید.",
+    k: "زبان برنامه نویسی ابزار پایتون numpy pandas" },
+
+  { cat: "پروژه و کار عملی",
+    q: "آیا باید پروژه بدهم؟ چند تا؟ ددلاین آن چه زمانی است؟",
+    a: "به‌طور کلی در طول دوره آموزشی ممکن است منتور برای شما تسک‌ها یا پروژه‌هایی در نظر بگیرد که بر حسب عملکرد و نتایج شما، تعداد و زمان اجرای آن متفاوت خواهد بود.",
+    k: "پروژه تسک ددلاین تعداد تحویل" },
+
+  { cat: "پروژه و کار عملی",
+    q: "اگر در پروژه گیر کنم، از چه کسی بپرسم؟",
+    a: "ابتدا سوال خود را در گپ دپارتمان مطرح کنید تا به‌صورت عمومی اگر کسی از اعضا پاسخ را می‌دانست، به شما بدهد. اگر کسی پاسخی نداد، اسیستنت‌های دپارتمان پاسخگوی سوالات شما هستند. اگر باز هم حس کردید که به پاسخ موردنظر نرسیدید، می‌توانید سوال خود را از منتور بپرسید.",
+    k: "گیر کردن پروژه سوال پرسیدن گپ اسیستنت منتور" },
+
+  { cat: "پروژه و کار عملی",
+    q: "پروژه‌ها گروهی است یا فردی؟",
+    a: "بستگی به نوع پروژه و تسک تعریف‌شده دارد و می‌تواند متغیر باشد؛ یعنی هم ممکن است گروهی و هم فردی تعریف شود.",
+    k: "پروژه گروهی فردی تیمی" },
+
+  { cat: "پروژه و کار عملی",
+    q: "سیستم من ضعیف است، می‌توانم پروژه سنگین اجرا کنم؟",
+    a: "برای شروع کار و کدنویسی پایه، لزوماً نیازی به سیستمی با سخت‌افزار فوق‌العاده ندارید و می‌توانید با حداقل امکانات هم شروع کنید. در ادامه مسیر که وارد مباحث پیاده‌سازی مدل‌ها شدید، بر حسب نیازتان سیستم خود را ارتقا دهید.",
+    k: "سیستم ضعیف سخت افزار gpu ارتقا پیاده سازی مدل" },
+
+  { cat: "پروژه و کار عملی",
+    q: "معیار ارزیابی و نمره‌دهی چگونه است؟",
+    a: "بر حسب عملکرد شما، گزارش هفتگی و همچنین فعالیت شما در دپارتمان ارزیابی می‌شود.",
+    k: "ارزیابی نمره دهی معیار عملکرد گزارش فعالیت" },
+
+  { cat: "ارتباطات و اداری",
+    q: "منتور من کیست؟ چگونه با ایشان در تماس باشم؟",
+    a: "منتور دپارتمان هوش مصنوعی سرکار خانم قهرمانی هستند که در گپ مجموعه با لیبل «منتور AI» حضور دارند.",
+    k: "منتور کیست خانم قهرمانی تماس ارتباط لیبل" },
+
+  { cat: "ارتباطات و اداری",
+    q: "اگر مشکلی پیش بیاید (غیبت، انصراف، تغییر گروه) با چه کسی هماهنگ کنم؟",
+    a: "هماهنگی‌های لازم را باید با منتور یا اسیستنت‌های این دپارتمان انجام دهید.",
+    k: "مشکل غیبت انصراف تغییر گروه هماهنگی منتور اسیستنت" },
+
+  { cat: "ابهام و تردید",
+    q: "اگر عقب بیفتم، جبران می‌شود؟",
+    a: "شما باید به‌صورت روتین برای آموزش خود یک تایم حداقلی بین ۱ تا ۲ ساعت را در نظر بگیرید تا منجر به عقب‌افتادگی زیاد میان شما و سایر افراد نشود. اما در صورتی که مثلاً برای یک هفته به هر دلیلی عملکرد لازم را نداشتید، باید سعی کنید در روزهای آینده این فاصله ایجادشده را جبران کنید.",
+    k: "عقب افتادن جبران فاصله عملکرد ضعیف" },
+
+  { cat: "ابهام و تردید",
+    q: "اگر نتوانم ادامه دهم، عضویتم باطل می‌شود؟",
+    a: "در صورتی که به این نتیجه رسیدید که امکان ادامه همکاری با این دپارتمان را ندارید، با منتور مجموعه هماهنگ کنید تا عضویت شما تعلیق شود.",
+    k: "ادامه ندادن عضویت باطل تعلیق انصراف" },
+
+  { cat: "ابهام و تردید",
+    q: "این مسیر به بازار کار وصل می‌شود یا فقط آموزشی است؟",
+    a: "شاید مهم‌ترین هدف این انجمن همین باشد که شما را برای ورود به بازار کار آماده کند؛ که البته قطعاً به عملکرد هر شخص بستگی دارد. افرادی که طی دوره آموزشی عملکرد مناسبی داشته باشند، می‌توانند از سایر بخش‌های این انجمن — که با شبکه‌سازی مناسب، افراد را به شرکت‌ها برای کارآموزی یا پروژه‌های AIC Lab متصل می‌کند — استفاده کنند و تجربه پروژه‌های واقعی و محیط حرفه‌ای را کسب کنند.",
+    k: "بازار کار اتصال شرکت کارآموزی شبکه سازی aic lab پروژه واقعی" },
+
+  { cat: "ابهام و تردید",
+    q: "فرصت همکاری در پروژه‌های واقعی وجود دارد؟",
+    a: "بخش‌هایی در این انجمن وجود دارد، مانند AIC Lab، که تیم‌سازی لازم را برای افرادی که به صلاح‌دید منتور انتخاب می‌شوند، فراهم می‌کند تا با تیم‌سازی درست وارد پروژه‌های واقعی شوند.",
+    k: "همکاری پروژه واقعی aic lab تیم سازی انتخاب" }
+];
+
+const faqList = document.getElementById('faqList');
+const searchInput = document.getElementById('searchInput');
+
+function normalize(text) {
+  return text
+    .toLowerCase()
+    .replace(/[يى]/g, 'ی')
+    .replace(/[ك]/g, 'ک')
+    .replace(/[ًٌٍَُِّْ]/g, '')
+    .replace(/[؟?!.,،:;()«»\-_]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function render(items, highlightQs = []) {
+  if (items.length === 0) {
+    faqList.innerHTML = `<div class="no-result"><span class="emoji">🤔</span>پاسخی برای سوال شما یافت نشد.<br>لطفاً با کلمات دیگری امتحان کنید یا سوال خود را در گپ دپارتمان مطرح کنید.</div>`;
+    return;
+  }
+
+  const grouped = {};
+  items.forEach(item => {
+    if (!grouped[item.cat]) grouped[item.cat] = [];
+    grouped[item.cat].push(item);
+  });
+
+  let html = '';
+  let i = 0;
+  for (const cat in grouped) {
+    html += `<div class="category-title">${cat}</div>`;
+    grouped[cat].forEach(item => {
+      const isOpen = highlightQs.includes(item.q);
+      html += `
+        <div class="faq-item ${isOpen ? 'open' : ''}" style="animation-delay:${i * 0.04}s">
+          <div class="faq-question">
+            <span class="q-text">${item.q}</span>
+            <span class="arrow-wrap">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </span>
+          </div>
+          <div class="faq-answer">${item.a}</div>
+        </div>
+      `;
+      i++;
+    });
+  }
+  faqList.innerHTML = html;
+
+  document.querySelectorAll('.faq-question').forEach(el => {
+    el.addEventListener('click', () => {
+      el.parentElement.classList.toggle('open');
+    });
+  });
+}
+
+function search(query) {
+  const q = normalize(query);
+  if (!q) { render(faqData); return; }
+
+  const words = q.split(' ').filter(w => w.length > 1);
+
+  const scored = faqData.map(item => {
+    const haystack = normalize(item.q + ' ' + item.a + ' ' + item.k);
+    let score = 0;
+    words.forEach(w => {
+      if (haystack.includes(w)) score++;
+      if (normalize(item.q).includes(w)) score += 2;
+      if (normalize(item.k).includes(w)) score += 1.5;
+    });
+    return { item, score };
+  })
+  .filter(x => x.score > 0)
+  .sort((a, b) => b.score - a.score);
+
+  const results = scored.map(x => x.item);
+  const highlightQs = scored.slice(0, 2).map(x => x.item.q);
+  render(results, highlightQs);
+}
+
+let debounce;
+searchInput.addEventListener('input', e => {
+  clearTimeout(debounce);
+  debounce = setTimeout(() => search(e.target.value), 180);
+});
+
+render(faqData);
+</script>
+</body>
+</html>
